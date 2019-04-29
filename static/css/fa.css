@@ -1,0 +1,146 @@
+
+
+/* For Model Popup */
+
+#fact11 {
+  background: url("https://assets.vogue.com/photos/5bf4664e090f622d55116ce1/master/pass/00-promo-image-the-tulip-skyscraper-building-london.jpg") center top no-repeat fixed;
+  background-size: cover;
+  color: white;
+  position: relative;
+  border: 2px solid red;
+  border-radius: 6px;
+  }
+
+  #fact11::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(5, 5, 5, 0.78);
+  z-index: 0;
+  }
+  
+  
+  #fact11 .container {
+  position: relative;
+  z-index: 100;
+  }
+  
+/* For Index */
+
+#fact1 {
+  background: url("https://assets.vogue.com/photos/5bf4664e090f622d55116ce1/master/pass/00-promo-image-the-tulip-skyscraper-building-london.jpg") center top no-repeat fixed;
+  background-size: cover;
+  padding: 40px 0 ;
+  position: relative;
+  }
+
+  #fact1::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(5, 5, 5, 0.78);
+  z-index: 0;
+  }
+  
+  
+  #fact1 .container {
+  position: relative;
+  z-index: 100;
+  }
+  
+
+
+
+/* For Index Bottom Page */
+
+  #fact2 {
+    background: url("http://www.greenrealestatelaw.com/wp-content/uploads/2011/05/Freedom-Tower.jpg") center top no-repeat fixed;
+    background-size: cover;
+    padding: 40px 0 ;
+    position: relative;
+    }
+  
+    #fact2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(5, 5, 5, 0.78);
+    z-index: 0;
+    }
+    
+    
+    #fact2 .container {
+    position: relative;
+    z-index: 100;
+    }
+    
+/* For About Page */
+
+
+    #fact22 {
+      background: url(" https://abs.green/files/pics/csm_Heydar-Aliyev-Center-6-cropped_web_v2_efbc456ba1.jpg") center top no-repeat fixed;
+      background-size: cover;
+      padding: 40px 0 ;
+      position: relative;
+      }
+    
+      #fact22::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(5, 5, 5, 0.78);
+      z-index: 0;
+      }
+      
+      
+      #fact22 .container {
+      position: relative;
+      z-index: 100;
+      }
+
+
+
+/* Product Details Page Css */
+.fab{
+ 
+  width: 40px;
+  height: 40px;
+  line-height: 500px;
+  font-size: 21px;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 3px 3px 3px  green;;
+  margin-bottom:-5px;
+}
+
+.fab:hover {
+  opacity: 0.8;
+}
+.fa-twitter:hover{
+  background: #55ACEE;
+  color: white;
+}
+.fa-facebook:hover{
+  background: #3B5998;
+  color: white;
+}
+.fa-linkedin:hover{
+  background: #007bb5;
+  color: white;
+}
+.fa-instagram:hover{
+  background: #125688;
+  color: white;
+}

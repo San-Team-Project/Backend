@@ -1,0 +1,222 @@
+{% extends 'base.html' %} 
+
+{% load humanize %}
+
+{% block title %} DOCTOR ON CALL {% endblock %}
+
+{% block js %}
+
+<script language="javascript" type="text/javascript">
+$(window).load(function()
+{
+    $('#myModal').modal('show');
+});
+</script>
+
+{% endblock %}
+  
+{% block content %}
+
+<!-- Modal -->
+
+
+<div class="modal fade bd-example-modal-lg" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered "><!-- modal-lg  "For Make Largee Model-->
+    
+      <!-- Modal content-->
+      <div class="modal-content " id="fact11">
+        <div class="modal-header">
+          <h3 class="modal-title text-success"> Welcome To Doctor On Call  </h3>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          
+        </div>
+        <div class="modal-body">
+          <h4 class="text-white text-center">We Give Best Quality and Service </h4>
+          <p class="bg-success" style="padding:10px; border-radius: 3px ">If You Have Any Query About House You Can Contact Us :</p>
+          <h5><i class="fa fa-envelope text-success"></i> <a href="mailto:rajr97555@gmail.com" class="text-white" style="text-decoration: none;">&nbsp;&nbsp;    rajr97555@gmail.com</a></h5>
+          <h5 style="margin-top: 20px;"><i class="fa fa-phone text-success"></i>  <a href="tel:+48722750618" class="text-white" style="text-decoration: none;">&nbsp;&nbsp;    +48722750618</a></h5>
+          <br><h4 class="text-success"> Please Subscribe Us To Get Latest Offer </h4>
+          {% comment %} <form action="" method="POST"> {% endcomment %}
+            <div class="form-group">
+              <input class="form-control" type="text" placeholder="Enter Email : raj@gmail.com" />
+            </div>
+
+            <div class="form-group text-right">
+              <button class="btn btn-success " data-dismiss="modal"><i class="fa fa-arrow-right"></i>   Subscribe Us </button>
+            </div>
+          {% comment %} </form> {% endcomment %}
+        </div>
+        <div class="modal-footer">
+           <button type="button" class="btn btn-danger text-white close" data-dismiss="modal" style="padding:10px;"> <i class="fa fa-times"></i>  Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+<!-- Showcase -->
+<section id="fact1">
+    <div class="container text-center">
+      <div class="home-search ">
+        <div class="overlay">
+         <h1 class="display-4 mb-4 text-white">
+            DOCTOR ON CALL
+          </h1>
+          <p class="lead text-white">Search Doctor by Name, Location, Specialities, And Other Options
+           </p>
+          <div class="search">
+            <form action="{% url 'doctor' %}">
+              <!-- Form Row 1 -->
+              <div class="form-row">
+                <div class="col-md-6 mb-3">
+                  <label class="sr-only">Keywords</label>
+                  <input type="text" name="keywords" class="form-control" placeholder="Keyword (city,name,country,specialization,..)">
+                </div>
+
+
+               <div class="col-md-6 mb-3">
+                  <label class="sr-only">Specialities</label>
+                  <select name="special" class="form-control">
+                    <option selected="true" disabled="disabled">Specialities (All)</option>
+                    {% for key,value in statee.items %}
+                      <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %} 
+                  </select>
+                </div>
+              </div>
+              <!-- Form Row 2 -->
+              <div class="form-row">
+                <div class="col-md-4 mb-3">
+                  <label class="sr-only">State</label>
+                  <select name="state" class="form-control">
+                    <option selected="true" disabled="disabled">States (All)</option>
+                    {% for key,value in state_choices.items %}
+                      <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %} 
+                  </select>
+                </div>
+
+            
+
+                  <div class="col-md-4 mb-3">
+                    <label class="sr-only">City</label>
+                    <select name="city" class="form-control">
+                     
+                     <option selected="true" disabled="disabled">City (All)</option>
+                     {% for listing in lol %}
+                        <option value="{{ listing.city }}" >{{ listing.city }}</option>
+                      {% endfor %} 
+                    </select>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <label class="sr-only">Country</label>
+                    <select name="country" class="form-control">
+                      <option selected="true" disabled="disabled">Country(All)</option>
+                      {% for listing in lol %}
+                        <option value="{{ listing.country }}">{{ listing.country }}</option>
+                      {% endfor %} 
+                    </select>
+                  </div>
+              
+              </div>
+              <button class="btn btn-secondary btn-block  " type="submit">Submit form</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+   </div>
+<br>
+  <!-- Alerts -->
+  {% include 'partials/_alerts.html' %}
+
+  <!-- Listings -->
+  <section id="listings" class="py-5">
+    <div class="container">
+     <h1 class="text-center mb-3">Registered Doctor  List</h1>
+      <hr style="border-width: 3px; border-color: green;">
+      <div class="row">
+        {% if users %}
+          {% for listing in users %}
+            {% if listing.verified  %}
+         
+            <div class=" col-sm-4 ">
+              <div class="card listing-preview">
+             
+                <img class="card-img-top" src=" {% if listing.photo.url %}{{ listing.photo.url }} {% else %}http://www.markweb.in/primehouseware/images/noimage.png {% endif %}" alt="" style="height: 220px;">
+                <div class="card-img-overlay">
+                  <h2>
+                    <span class="badge badge-success text-white">New</span>
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <div class="listing-heading text-center">
+                    <h4 class="text-primary"><i class=" fa fa-user"></i>  {{ listing.name }} <span class="bg-primary" style="border-radius: 50%; font-size: 15px; padding:4px;" title="Verified"> {% if listing.verified %}  <i class="fa fa-check text-white"></i> {% else %}http://www.markweb.in/primehouseware/images/noimage.png {% endif %} </span></h4>
+                    
+                    <p>
+                      <i class="fas fa-map-marker text-success"></i>  {{ listing.state }}, {{ listing.country }}</p>
+                  </div>
+                  <hr>
+                  <div class="row text-info text-center">
+                    <div class="col-12">
+                      <h5><i class=" fa fa-user-md"></i>  {{ listing.specialization }} </h5>
+                      <p><i class=" fa fa-clock"></i>  {{ listing.availabel }} </p>
+                      <hr/>
+                      <span style="float: right; "><a href="tel:{{ listing.phone }}"><i class=" fa fa-phone bg-success" style="padding: 17px; border-radius: 50%; color:white; box-shadow: 3px 3px 3px green;"  ></i></a></span>
+                      <span style="float: left;"><a href="mailto:{{ listing.email }}"> <i class=" fa fa-envelope bg-danger" style="padding: 17px; border-radius: 50%; color:white; box-shadow: 3px 3px 3px red;"  ></a></i></span>
+                      </div>
+                    
+                  </div>
+                  
+                  
+                  <hr>
+                  <a href="{{ listing.get_absolute_url }}" class="btn btn-primary btn-block" style=" box-shadow: 3px 3px 3px blue;"><i class="fas fa-eye"></i>  More Info</a>
+                </div>
+              </div>
+            </div>
+           
+            {% endif %} 
+          {% endfor %} 
+         
+        {% else %} 
+          <div class="col-md-12">
+            <h3 class="text-center text-success" style="margin-bottom: 10px;">Sorry 😞!! We Cant Find Try Again !!. </h3>
+          </div>
+        {% endif %} 
+
+      </div>
+    </div>
+  </section>
+
+  <section id="fact2" class="py-5 bg-secondary text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fas fa-comment fa-4x mr-4"></i>
+          <hr>
+          <h3>Consulting Services</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-home fa-4x mr-4"></i>
+          <hr>
+          <h3>Propery Management</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-suitcase fa-4x mr-4"></i>
+          <hr>
+          <h3>Renting & Selling</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+{% endblock %}

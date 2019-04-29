@@ -1,0 +1,30 @@
+{% extends 'base.html' %} 
+{% load crispy_forms_tags %}
+
+{% load humanize %}
+
+{% block title %} DOCTOR ON CALL {% endblock %}
+
+{% block js %}
+
+{% endblock %}
+  
+{% block content %}
+
+<form method="POST" action="." enctype="multipart/form-data">
+  {% csrf_token %}
+<div style="margin: 0 auto;">
+
+ <div class="col-sm-6" style="margin: 0 auto;">
+ <h2 class="text-center"> Add DOCTOR </h2>
+   {{ form|crispy }}
+  
+  
+
+  <button type="submit" class="btn btn-success" style="margin-bottom: 30px;">Save DOCTOR</button>
+  <a href="{% url 'geo' %}"  class="btn btn-success" style="margin-bottom: 30px;">Goe Location</a>
+  </div>
+
+</form>
+
+{% endblock %}

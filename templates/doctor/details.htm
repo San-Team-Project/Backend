@@ -1,0 +1,189 @@
+{% extends 'base.html' %} 
+
+{% load humanize %}
+
+{% block title %} DOCTOR ON CALL {% endblock %}
+
+{% block js %}
+
+
+
+{% endblock %}
+  
+{% block content %}
+
+<!-- Modal -->
+
+
+<!-- Showcase -->
+<section id="fact1">
+    <div class="container text-center">
+      <div class="home-search ">
+        <div class="overlay">
+          <h1 class="display-4 mb-4 text-white">
+            {{listing.name}} Details  <button class="btn btn-info  btn-lg" data-toggle="modal" data-target="#inquiryModal"> <i class="fa fa-address-book "></i> Make An Inquiry</button>
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+   </div>
+<br>
+  <!-- Alerts -->
+  {% include 'partials/_alerts.html' %}
+
+  <!-- Listings -->
+  <section id="listings" class="py-5">
+    <div class="container">
+      <h3 class="text-center mb-3">Doctor List</h3>
+      <div class="row">
+
+         
+            <div class="col-md-6 col-lg-3 mb-3">
+              <div class="card listing-preview">
+                <img class="card-img-top" src="{{ listing.photo.url }}" alt="" style="height: 220px;">
+                <div class="card-img-overlay">
+                  <h2>
+                    <span class="badge badge-success text-white">New</span>
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <div class="listing-heading text-center">
+                    <h4 class="text-primary">{{ listing.name }}</h4>
+                    <p>
+                      <i class="fas fa-map-marker text-success"></i>  {{ listing.state }}, {{ listing.country }}</p>
+                  </div>
+                  <hr>
+                  <div class="row text-info text-center">
+                    <div class="col-12">
+                      <h5><i class=" fa fa-user-md"></i>  {{ listing.specialization }} </h5>
+                      
+                      <hr/>
+                      <span style="float: right;"><a href="tel:{{ listing.phone }}"><i class=" fa fa-phone bg-success" style="padding: 17px; border-radius: 50%; color:white;"  ></i></a></span>
+                      <span style="float: left;"><a href="mailto:{{ listing.email }}"> <i class=" fa fa-envelope bg-danger" style="padding: 17px; border-radius: 50%; color:white;"  ></a></i></span>
+                      </div>
+                    
+                  </div>
+                  
+                  
+                  <hr>
+                  <a href="{{ listing.get_absolute_url }}" class="btn btn-primary btn-block"><i class="fas fa-eye"></i>  More Info</a>
+                </div>
+              </div>
+            </div>
+
+
+      </div>
+    </div>
+  </section>
+
+  <section id="fact2" class="py-5 bg-secondary text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fas fa-comment fa-4x mr-4"></i>
+          <hr>
+          <h3>Consulting Services</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-home fa-4x mr-4"></i>
+          <hr>
+          <h3>Propery Management</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-suitcase fa-4x mr-4"></i>
+          <hr>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+{% if users.has_other_pages %}
+<hr style="border-width: 2px; border-color: rgba(137, 255, 162, 0.78)">
+<div class="container justify-content-center " style="margin-top: 30px;" >
+<center>
+<ul class="pagination justify-content-center" style ="margin: 0 auto; width 300px;">
+    {% if users.has_previous %}
+      <li class="page-item"><a href="?page={{ users.previous_page_number }}" class="btn btn-danger">&laquo;</a></li>
+    {% else %}
+      <li class="disabled btn btn-danger"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in users.paginator.page_range %}
+      {% if users.number == i %}
+        <li class="page-item active"><span  class="btn btn-warning" >{{ i }} <span class="sr-only" class="btn btn-primary">(current)</span></span></li>
+      {% else %}
+        <li class="page-item"><a href="?page={{ i }}" class="btn btn-primary">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if users.has_next %}
+      <li class="page-item"><a href="?page={{ users.next_page_number }}" class="btn btn-success">&raquo;</a></li>
+    {% else %}
+      <li class="disabled btn btn-success"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+  </center>
+  </div>
+{% endif %}
+
+
+
+
+
+
+<!-- Inquiry Modal -->
+<div class="modal fade" id="inquiryModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'contact' %}" method="POST">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{ user.id }}">
+            {% else %}
+              <input type="hidden" name="user_id" value="0">
+            {% endif %}
+            <input type="hidden" name="realtor_email" value="{{ listing.email }}">
+            <input type="hidden" name="listing_id" value="{{ listing.id }}">
+            <div class="form-group">
+              <label for="property_name" class="col-form-label">Property:</label>
+              <input type="text" name="listing" class="form-control" value="{{ listing.name }}">
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-form-label">Name:</label>
+              <input type="text" name="name" class="form-control" {% if user.is_authenticated %} value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-form-label">Email:</label>
+              <input type="email" name="email" class="form-control" {% if user.is_authenticated %} value="{{ user.email }}" {% endif %} required>
+            </div>
+            <div class="form-group">
+              <label for="phone" class="col-form-label">Phone:</label>
+              <input type="text" name="phone" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="message" class="col-form-label">Message:</label>
+              <textarea name="message" class="form-control"></textarea>
+            </div>
+            <hr>
+            <input type="submit" value="Send" class="btn btn-block btn-secondary">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}

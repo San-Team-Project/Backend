@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} | User Dashboard {% endblock %}
+
+{% block content %}
+<section id="fact1" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4">User Message Details</h1>
+          <p class="lead">See Deatils Of Your Message to<span class="text-success"> {{ contact.listing}}<span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+  
+  <div class="container">
+<div style="margin: 0 auto; max-width: 600px;  border: 2px solid green; box-shadow: 3px 3px 3px black; margin-bottom: 20px; padding: 15px;">
+
+    <div class = "row">
+      <div class="col-sm-12">
+        <h6 style="margin-top:6px;"><i class="fa fa-user-md"></i> Doctor Name</h6> <span class="text-primary form-control">{{ contact.listing}}</span>
+        <h6 style="margin-top:6px;"><i class="fa fa-user"></i>Name</h6> <span class="text-primary form-control">{{ contact.name}}</span></h6>
+        <h6 style="margin-top:6px;"><i class="fa fa-envelope "></i> Email Id </h6><span class="text-primary form-control">{{ contact.email}}</span>
+        <h6 style="margin-top:6px;"><i class="fa fa-phone"></i> Phone</h6> <span class="text-primary form-control">{{ contact.phone}}</span>
+        <p style="margin-top:6px;"><i class="fa fa-address-book"></i> Message :</p>
+        <span class="text-primary form-control" style="height: 150px;">{{ contact.message}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

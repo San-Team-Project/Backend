@@ -1,0 +1,241 @@
+{% extends 'base.html' %} 
+
+{% load humanize %}
+
+{% block title %} DOCTOR ON CALL {% endblock %}
+
+{% block css%}
+
+<style>
+/* For Model Popup */
+
+#factl {
+  background: url("{% if listing.photourl %}{{ listing.photourl }} {% else %}{{ listing.photo.url }} {% endif %}") center top no-repeat fixed;
+  background-size: cover;
+  color: white;
+  position: relative;
+  padding: 30px;
+  border-radius: 6px;
+  }
+
+  #factl::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(5, 5, 5, 0.78);
+  z-index: 0;
+  }
+  
+  
+  #factl .container {
+  position: relative;
+  z-index: 100;
+  }
+</style>
+
+{%endblock%}
+
+{% block js %}
+
+<script language="javascript" type="text/javascript">
+$(window).load(function()
+{
+    $('#myModal').modal('show');
+});
+</script>
+
+{% endblock %}
+  
+{% block content %}
+
+<!-- Modal -->
+
+{% comment %} 
+<div class="modal fade bd-example-modal-lg" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered "><!-- modal-lg  "For Make Largee Model-->
+    
+      <!-- Modal content-->
+      <div class="modal-content " id="fact11">
+        <div class="modal-header">
+          <h3 class="modal-title text-success"> Welcome To Doctor On Call  </h3>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          
+        </div>
+        <div class="modal-body">
+          <h4 class="text-white text-center">We Give Best Quality and Service </h4>
+          <p class="bg-success" style="padding:10px; border-radius: 3px ">If You Have Any Query About House You Can Contact Us :</p>
+          <h5><i class="fa fa-envelope text-success"></i> <a href="mailto:rajr97555@gmail.com" class="text-white" style="text-decoration: none;">&nbsp;&nbsp;    rajr97555@gmail.com</a></h5>
+          <h5 style="margin-top: 20px;"><i class="fa fa-phone text-success"></i>  <a href="tel:+48722750618" class="text-white" style="text-decoration: none;">&nbsp;&nbsp;    +48722750618</a></h5>
+          <br><h4 class="text-success"> Please Subscribe Us To Get Latest Offer </h4>
+        
+            <div class="form-group">
+              <input class="form-control" type="text" placeholder="Enter Email : raj@gmail.com" />
+            </div>
+
+            <div class="form-group text-right">
+              <button class="btn btn-success " data-dismiss="modal"><i class="fa fa-arrow-right"></i>   Subscribe Us </button>
+            </div>
+  
+        </div>
+        <div class="modal-footer">
+           <button type="button" class="btn btn-danger text-white close" data-dismiss="modal" style="padding:10px;"> <i class="fa fa-times"></i>  Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div> {% endcomment %}
+
+<!-- Showcase -->
+<section id="factl">
+    <div class="container text-center">
+      <div class="home-search ">
+        <div class="overlay">
+         <h1 class="display-4 mb-4 text-white">
+           <i class="fa fa-hospital"></i>   {{listing.name }} 
+            <button class="btn btn-info  btn-lg" data-toggle="modal" data-target="#inquiryModal"> <i class="fa fa-address-book "></i> Make An Inquiry</button>
+          </h1>
+         
+        </div>
+      </div>
+    </div>
+  </section>
+   </div>
+<br>
+  <!-- Alerts -->
+  {% include 'partials/_alerts.html' %}
+
+  <!-- Listings -->
+  <section id="listings" class="py-5">
+    <div class="container">
+     <h1 class="text-center mb-3">Registered Hospital  List</h1>
+      <hr style="border-width: 3px; border-color: green;">
+      <div class="row">
+
+         
+            <div class=" col-sm-4 ">
+              <div class="card listing-preview">
+             
+                <img class="card-img-top" src=" {% if listing.photourl %}{{ listing.photourl }} {% else %}{{ listing.photo.url }} {% endif %}" alt="" style="height: 220px;">
+                <div class="card-img-overlay">
+                  <h2>
+                    <span class="badge badge-success text-white">New</span>
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <div class="listing-heading text-center">
+                    <h4 class="text-primary"><i class=" fa fa-hospital"></i>  {{ listing.name }}</h4>
+                    
+                    <p>
+                      <i class="fas fa-map-marker text-success"></i>  {{ listing.state }}, {{ listing.country }}</p>
+                  </div>
+                  <hr>
+                  <div class="row text-info text-center">
+                    <div class="col-12">
+                      <h5><i class=" fa fa-hospital"></i>Type:  {{ listing.type }} </h5>
+                      <p >{{ listing.timing|safe }}</p>
+                      <hr/>
+                      <span style="float: right; "><a href="tel:{{ listing.phone }}"><i class=" fa fa-phone bg-success" style="padding: 17px; border-radius: 50%; color:white; box-shadow: 3px 3px 3px green;"  ></i></a></span>
+                      <span style="float: left;"><a href="mailto:{{ listing.email }}"> <i class=" fa fa-envelope bg-danger" style="padding: 17px; border-radius: 50%; color:white; box-shadow: 3px 3px 3px red;"  ></a></i></span>
+                      </div>
+                    
+                  </div>
+                  
+                  
+                  <hr>
+                  <a href="{{ listing.get_absolute_url }}" class="btn btn-primary btn-block" style=" box-shadow: 3px 3px 3px blue;"><i class="fas fa-eye"></i>  More Info</a>
+                </div>
+              </div>
+            </div>
+
+
+      </div>
+    </div>
+  </section>
+
+  <section id="fact2" class="py-5 bg-secondary text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fas fa-comment fa-4x mr-4"></i>
+          <hr>
+          <h3>Consulting Services</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-home fa-4x mr-4"></i>
+          <hr>
+          <h3>Propery Management</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-suitcase fa-4x mr-4"></i>
+          <hr>
+          <h3>Renting & Selling</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+<!-- Inquiry Modal -->
+  <div class="modal fade" id="inquiryModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'contact' %}" method="POST">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{ user.id }}">
+            {% else %}
+              <input type="hidden" name="user_id" value="0">
+            {% endif %}
+            <input type="hidden" name="realtor_email" value="{{ hospital.email }}">
+            <input type="hidden" name="listing_id" value="{{ listing.id }}">
+            <div class="form-group">
+              <label for="property_name" class="col-form-label">Property:</label>
+              <input type="text" name="listing" class="form-control" value="{{ listing.name }}">
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-form-label">Name:</label>
+              <input type="text" name="name" class="form-control" {% if user.is_authenticated %} value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-form-label">Email:</label>
+              <input type="email" name="email" class="form-control" {% if user.is_authenticated %} value="{{ user.email }}" {% endif %} required>
+            </div>
+            <div class="form-group">
+              <label for="phone" class="col-form-label">Phone:</label>
+              <input type="text" name="phone" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="message" class="col-form-label">Message:</label>
+              <textarea name="message" class="form-control"></textarea>
+            </div>
+            <hr>
+            <input type="submit" value="Send" class="btn btn-block btn-secondary">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
