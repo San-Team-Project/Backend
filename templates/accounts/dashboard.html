@@ -43,6 +43,9 @@
               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
                 <i class="fa fa-eye"></i>  View Profile 
               </button>
+              <span style="float: left">
+                <a class="btn btn-dark" href="{% url 'addhospital' %}"><i class="fa fa-users"></i>  Add Hospital</a>
+             </span>
               <span style="float: right">
                 <a class="btn btn-info" href="{% url 'doctoradd' %}"><i class="fa fa-users"></i>  Add Doctor</a>
              </span>
@@ -80,6 +83,34 @@
           {% else %}
             <p>You have not made any inquiries</p>
           {% endif %}
+
+
+          {% if appointment %}
+          <p>Here are the Appoint History</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">D.Name</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for contac in appointment %}
+                <tr>
+                  <td>{{ contac.pk }}</td>
+                  <td>{{ contac.listing }}</td>
+                  
+                  <td>
+                    <a class="btn btn-primary" href="{{ contac.get_absolute_url }}"><i class="fa fa-calendar "></i> View Appointment</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>You have not made any inquiries</p>
+        {% endif %}
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ from doctor.choices import statee,state_choices
 from .models import Doctor,DoctorType
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from .forms import DoctorForm
+from .forms import DoctorForm,Doctor
 from django.http import HttpResponseRedirect
 from django.contrib import messages, auth
 
@@ -26,6 +26,7 @@ def index(request):
 
 def about(request):
     about = DoctorType.objects.all()
+    listen = Doctor.objects.all()
 
     # Keywords
     if 'keywords' in request.GET:
@@ -33,9 +34,18 @@ def about(request):
         if keywords:
             about = about.filter( name__icontains=keywords)
 
+     # State
+    if 'special' in request.GET:
+        state = request.GET['special']
+        if state:
+            listen =listen.filter(specialization__iexact=state)
+
     context = {
         'about': about,
+        'listen':listen,
+        'statee': statee ,
         'values': request.GET
+       
     }
 
     return render(request, 'pages/about.html', context)

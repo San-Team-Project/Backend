@@ -6,6 +6,7 @@ from doctor.choices import statee,state_choices
 from .models import Hospital
 from doctor.choices import state_choices,statee
 from django.db.models import Q
+from .forms import HospitalForm
 # Create your views here.
 
 
@@ -82,3 +83,16 @@ def hospital_details(request, listing_id):
   }
 
   return render(request, 'hospital/hospital.htm', context)
+
+
+def addhospital(request):
+    # if request.method == 'POST':
+    form = HospitalForm(request.POST or None, request.FILES or None)
+    if request.method == "POST":
+        if form.is_valid():
+
+            return render(request, 'hospital/addhospital.html')
+
+    else:
+        form = HospitalForm()
+    return render(request, 'hospital/addhospital.html', {'form': form})

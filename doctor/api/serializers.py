@@ -1,10 +1,16 @@
 from rest_framework import serializers
-from doctor.models import Doctor,Specialization,Emergency
+from doctor.models import Doctor,Specialization,Emergency, DoctorType
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.models import User
 
 
 # This is Doctor Section Api 
+
+class TypeSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = DoctorType
+    fields = ('pk','name')
+
 
 class ListSerializer(serializers.ModelSerializer):
   class Meta:

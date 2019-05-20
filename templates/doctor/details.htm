@@ -4,9 +4,71 @@
 
 {% block title %} DOCTOR ON CALL {% endblock %}
 
+{% block css %}
+<style>
+#listing {
+  background: url("{{ listing.photo.url }}") center top no-repeat fixed;
+  background-size: cover;
+  color: white;
+  position: relative;
+  border-radius: 6px;
+  }
+
+  #listing::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(5, 5, 5, 0.78);
+  z-index: 0;
+  }
+  
+  
+  #listing .container {
+  position: relative;
+  z-index: 100;
+  }
+
+  /* Tabs*/
+section {
+    padding: 60px 0;
+}
+
+section .section-title {
+    text-align: center;
+    color: #007b5e;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+#tabs{
+	background: #007b5e;
+    color: #eee;
+}
+#tabs h6.section-title{
+    color: #eee;
+}
+
+#tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #f3f3f3;
+    background-color: transparent;
+    border-color: transparent transparent #f3f3f3;
+    border-bottom: 4px solid !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+#tabs .nav-tabs .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    color: #eee;
+    font-size: 20px;
+}
+</style>
+{% endblock %}
+
 {% block js %}
-
-
 
 {% endblock %}
   
@@ -22,6 +84,7 @@
         <div class="overlay">
           <h1 class="display-4 mb-4 text-white">
             {{listing.name}} Details  <button class="btn btn-info  btn-lg" data-toggle="modal" data-target="#inquiryModal"> <i class="fa fa-address-book "></i> Make An Inquiry</button>
+             <button class="btn btn-danger  btn-lg" data-toggle="modal" data-target="#inquiryModa"> <i class="fa fa-calendar "></i> Appointment</button>
           </h1>
         </div>
       </div>
@@ -33,75 +96,77 @@
   {% include 'partials/_alerts.html' %}
 
   <!-- Listings -->
-  <section id="listings" class="py-5">
+  <section id="listing" class="py-5" style="margin-top:-25px;">
     <div class="container">
-      <h3 class="text-center mb-3">Doctor List</h3>
       <div class="row">
+        <div class="col-sm-5">
+            <img class="card-img-top" src=" {% if listing.photo.url %}{{ listing.photo.url }} {% else %}http://www.markweb.in/primehouseware/images/noimage.png {% endif %}" alt="" style=" border-radius: 5px;">
+        </div>
 
-         
-            <div class="col-md-6 col-lg-3 mb-3">
-              <div class="card listing-preview">
-                <img class="card-img-top" src="{{ listing.photo.url }}" alt="" style="height: 220px;">
-                <div class="card-img-overlay">
-                  <h2>
-                    <span class="badge badge-success text-white">New</span>
-                  </h2>
-                </div>
-                <div class="card-body">
-                  <div class="listing-heading text-center">
-                    <h4 class="text-primary">{{ listing.name }}</h4>
-                    <p>
-                      <i class="fas fa-map-marker text-success"></i>  {{ listing.state }}, {{ listing.country }}</p>
-                  </div>
-                  <hr>
-                  <div class="row text-info text-center">
-                    <div class="col-12">
-                      <h5><i class=" fa fa-user-md"></i>  {{ listing.specialization }} </h5>
-                      
-                      <hr/>
-                      <span style="float: right;"><a href="tel:{{ listing.phone }}"><i class=" fa fa-phone bg-success" style="padding: 17px; border-radius: 50%; color:white;"  ></i></a></span>
-                      <span style="float: left;"><a href="mailto:{{ listing.email }}"> <i class=" fa fa-envelope bg-danger" style="padding: 17px; border-radius: 50%; color:white;"  ></a></i></span>
-                      </div>
-                    
-                  </div>
-                  
-                  
-                  <hr>
-                  <a href="{{ listing.get_absolute_url }}" class="btn btn-primary btn-block"><i class="fas fa-eye"></i>  More Info</a>
-                </div>
-              </div>
-            </div>
-
-
+        <div class="col-sm-6">
+        {% if listing.verified  %}
+          <h1 class="text-white" style="letter-spacing: 5px;">{{ listing.name }}<span class="bg-primary" style="border-radius: 50%; font-size: 25px; padding:4px;" title="Verified"> {% if listing.verified %}  <i class="fa fa-check text-white"></i> {% else %}http://www.markweb.in/primehouseware/images/noimage.png {% endif %} </span></h1>
+        {% endif %} 
+          <h5><i class="fas fa-map-marker text-success"></i>  {{ listing.state }}, {{ listing.country }}</h5>
+          <h5><i class=" fa fa-user-md"></i>  {{ listing.specialization }} </h5>
+          <h5><i class=" fa fa-clock"></i>  {{ listing.availabel }}</h5>
+          <h5><i class=" fa fa-envelope "></i> {{ listing.email }} </h5>
+          <h5><i class=" fa fa-phone "></i> {{ listing.phone}} </h5>
+          {% comment %} <h5> {{ listing.about|safe}} </h5> {% endcomment %}
+          <h5>Experiance:  {{ listing.experiance}} Years </h5>
+          <h5>Hospital Name:  {{ listing.hospital}}  </h5>
+          <h5>Timing:  {{ listing.timing|safe}}  </h5>
+        </div>
       </div>
     </div>
-  </section>
+    
+ </section>
 
-  <section id="fact2" class="py-5 bg-secondary text-white">
-    <div class="container">
-      <div class="row text-center">
-        <div class="col-md-4">
-          <i class="fas fa-comment fa-4x mr-4"></i>
-          <hr>
-          <h3>Consulting Services</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
-            hic dignissimos ratione ea quae.</p>
-        </div>
-        <div class="col-md-4">
-          <i class="fas fa-home fa-4x mr-4"></i>
-          <hr>
-          <h3>Propery Management</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
-            hic dignissimos ratione ea quae.</p>
-        </div>
-        <div class="col-md-4">
-          <i class="fas fa-suitcase fa-4x mr-4"></i>
-          <hr>
+<section id="tabs">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 ">
+				<nav>
+					<div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">About</a>
+						{% comment %} <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Reviews</a>
+						 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a> {% endcomment %}
+						<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">Reviews</a>
+					</div> 
+				</nav>
+				<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+						{{ listing.about|safe}}
+					</div>
+					<div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
           
-        </div>
-      </div>
-    </div>
-  </section>
+					</div> 
+				</div>
+			
+			</div>
+		</div>
+	</div>
+</section>
+
+<div style="margin-top:20px;">
+<h2 class="text-center"> Reviews And Comment</h2><hr>
+<div id="disqus_thread" class="bg-white" style="padding: 15px;"></div>
+					<script>
+
+                (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://MovieRahul.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+                </script>
+
+</div>
+
+ 
+
+                
+				
 
 
 {% if users.has_other_pages %}
@@ -183,6 +248,64 @@
       </div>
     </div>
   </div>
+
+
+
+
+
+
+  <!-- Appointment Model-->
+<div class="modal fade" id="inquiryModa" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="inquiryModalLabel">Book Appointment</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'appointment' %}" method="POST">
+          {% csrf_token %}
+          {% if user.is_authenticated %}
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+          {% else %}
+            <input type="hidden" name="user_id" value="0">
+          {% endif %}
+          <input type="hidden" name="realtor_email" value="{{ listing.email }}">
+          <input type="hidden" name="listing_id" value="{{ listing.id }}">
+          <div class="form-group">
+            <label for="property_name" class="col-form-label">Doctor Name:</label>
+            <input type="text" name="listing" class="form-control" value="{{ listing.name }}">
+          </div>
+          <div class="form-group">
+            <label for="name" class="col-form-label">Patient Name:</label>
+            <input type="text" name="name" class="form-control" {% if user.is_authenticated %} value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
+          </div>
+          <div class="form-group">
+            <label for="email" class="col-form-label">Email:</label>
+            <input type="email" name="email" class="form-control" {% if user.is_authenticated %} value="{{ user.email }}" {% endif %} required>
+          </div>
+          <div class="form-group">
+            <label for="phone" class="col-form-label">Phone:</label>
+            <input type="text" name="phone" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="time" class="col-form-label">Time:</label>
+             <input type="time" name="time" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="time" class="col-form-label">Date:</label>
+             <input type="date" name="date" class="form-control">
+          </div>
+          <hr>
+          <input type="submit" value="Send" class="btn btn-block btn-secondary">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 

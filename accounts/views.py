@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from contacts.models import Contact
+from Appointment.models import Appointment
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm,UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
@@ -90,9 +91,11 @@ def logout(request):
 
 def dashboard(request):
   user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
+  appointment = Appointment.objects.order_by('-contact_date').filter(user_id=request.user.id)
 
   context = {
-    'user_contacts': user_contacts
+    'user_contacts': user_contacts,
+    'appointment': appointment,
   }
   return render(request, 'accounts/dashboard.html',context)
 
