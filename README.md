@@ -4,7 +4,7 @@ First of all, clone the repo:
 
 git clone https://github.com/San-Team-Project/Backend.git
 
-cd Backend
+cd Backend-backend
 
 Dependencies
 
